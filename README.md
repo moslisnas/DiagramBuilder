@@ -1,3 +1,14 @@
+# DiagramBuilder
+A diagram tool to create your schemas, workflows and interactive components.
+
+Based on https://github.com/moslisnas/React-WebTemplate
+
+## Additional node packages
+* CSS:
+    ```
+    npm install --save styled-components
+    ```
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

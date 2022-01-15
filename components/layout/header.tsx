@@ -1,14 +1,35 @@
 import React from "react";
+import styled from "styled-components";
+import { headerHeight, headerPadding } from "@/constants/layout-size-constants";
+
+const Container = styled.div`
+    width: 100%;
+    height: ${headerHeight.desktop};
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+`;
+const LeftContainer = styled.div`
+    display: grid;
+    padding-left: ${headerPadding.desktop};
+`;
+const RightContainer = styled.div`
+    padding-right: ${headerPadding.desktop};
+`;
+const Title = styled.h1`
+    margin: 0px;
+    line-height: ${headerHeight.desktop};
+`;
 
 const Header = () => {
     return(
-        <div style={{width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr"}}>
-            <div style={{padding: "10px", display: "flex"}}>
-                <img src="" width="20px" height="20px" />
-                <h1>Diagram builder</h1>
-            </div>
-        </div>
+        <Container>
+            <LeftContainer>
+                <Title>Diagrams</Title>
+            </LeftContainer>
+            <RightContainer>
+            </RightContainer>
+        </Container>
     );
-}
+};
 
 export default Header;

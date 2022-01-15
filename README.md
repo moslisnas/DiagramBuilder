@@ -6,7 +6,18 @@ Based on https://github.com/moslisnas/React-WebTemplate
 ## Additional node packages
 * CSS:
     ```
-    npm install --save styled-components
+    npm install styled-components --save
+    npm install @types/styled-components --save-dev
+    ```
+* Drag and drop:
+    * Diagrams:
+    ```
+    npm install react-flow-renderer --save
+    ```
+    * Kanban and drag and drop cards:
+    ```
+    npm install react-beautiful-dnd --save
+    npm install @types/react-beautiful-dnd --save-dev
     ```
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

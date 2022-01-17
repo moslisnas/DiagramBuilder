@@ -20,7 +20,6 @@ const DiagramViewport = (props: { nodes:any[], nodesHandler:any, edges:any[], ed
     const { background, controls, map } = useContext(DiagramViewportContext);
     
     const onConnect = (params:any) => {
-      console.log(params);
       const newEdge = {
         id: "e"+params.source+"-"+params.target,
         source: params.source,
@@ -52,9 +51,10 @@ const DiagramViewport = (props: { nodes:any[], nodesHandler:any, edges:any[], ed
             {map["enabled"] && (
               <MiniMap nodeColor={(node) => {return '#eee';}} nodeStrokeWidth={3} />
             )}
-            {background["enabled"] && (
+            {//THERE IS A CONSOLE WARNING WITH THIS ELEMENT
+            /*background["enabled"] && (
               <Background variant={background.variant} gap={background.gap} size={background.size}/>
-            )}
+            )*/}
           </ReactFlow>
         </Container>
     );

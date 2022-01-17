@@ -1,36 +1,51 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import ReactFlow, { Controls, MiniMap, Background } from "react-flow-renderer";
+import ReactFlow, { Controls, MiniMap, Background, removeElements, addEdge } from "react-flow-renderer";
+import ThemeContext from "context/theme-context";
 import DiagramViewportContext from "context/diagram-viewport-context";
-import { defaultNodes, defaultEdges } from "@/components/diagram/default-elements";
 
 const Container = styled.div`
   height: 100%;
   background-color: white;
 `;
 
-const combineElements = (nodes:any[], edges:any[]): any[] => {
-  let result:any[] = [];
-
-  nodes.map((node) => {
-    result.push(node);
-  });
-  edges.map((edge) => {
-    result.push(edge);
-  });
-
-  return result;
-}
-
-const DiagramViewport = () => {
+const DiagramViewport = (props: { nodes:any[], nodesHandler:any, edges:any[], edgesHandler:any, elements:any[], elementsHandler:any }) => {
+    console.log("Nodes actually: ")
+    console.log(props.nodes);
+    console.log("Edges actually: ")
+    console.log(props.edges);
+    console.log("Elements actually: ")
+    console.log(props.elements);
+    const { general } = useContext(ThemeContext);
     const { background, controls, map } = useContext(DiagramViewportContext);
-    const [nodes, setNodes] = useState(defaultNodes);
-    const [edges, setEdges] = useState(defaultEdges);
-    const [elements, setElements] = useState(() => combineElements(defaultNodes, defaultEdges));
-
+    
+    const onConnect = (params:any) => {
+      console.log(params);
+      const newEdge = {
+        id: "e"+params.source+"-"+params.target,
+        source: params.source,
+        target: params.target
+      }
+      props.edgesHandler([...props.edges, newEdge]);
+      props.elementsHandler([...props.elements, newEdge]);
+    }
+    const onElementsRemove = (elementsToRemove:any) => {
+      props.nodesHandler(props.nodes.filter((node:any) => node.id!==elementsToRemove[0]["id"]));
+      props.edgesHandler(props.edges.filter((edge:any) => edge.source!==elementsToRemove[0]["id"] && edge.target!==elementsToRemove[0]["id"]));
+      props.elementsHandler((els:any) => removeElements(elementsToRemove, els));
+    };
+    
     return(
         <Container>
-          <ReactFlow elements={elements}>
+          <ReactFlow
+            elements={props.elements}
+            onConnect={onConnect}
+            onElementsRemove={onElementsRemove}
+            deleteKeyCode={46}
+            style={{
+              backgroundColor: general==="light" ? "#FFFFFF" : "#222222"
+            }}
+          >
             {controls["enabled"] && (
               <Controls />
             )}

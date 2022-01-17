@@ -1,5 +1,5 @@
 import React from "react";
-import { BackgroundVariant } from "react-flow-renderer";
+import { defaultBackground, defaultControls, defaultMap } from "components/diagram/default";
 
 interface DiagramViewportContextValueProps{
     "background":any;
@@ -8,22 +8,10 @@ interface DiagramViewportContextValueProps{
     "setControls":any;
     "map":any;
     "setMap":any;
-}
-
-export const defaultBackground = {
-    "enabled": true,
-    "variant": BackgroundVariant.Lines,
-    "gap": 48,
-    "size": 1 
-};
-export const defaultControls = {
-    "enabled": true
-};
-export const defaultMap = {
-    "enabled": true
 };
 
-const defaultDiagramViewportValueContext:DiagramViewportContextValueProps = {
+
+const defaultDiagramViewportContextValue:DiagramViewportContextValueProps = {
     "background": defaultBackground,
     setBackground: ({}) => {},
     "controls": defaultControls,
@@ -31,6 +19,6 @@ const defaultDiagramViewportValueContext:DiagramViewportContextValueProps = {
     "map": defaultMap,
     setMap: ({}) => {}
 };
-const DiagramViewportContext = React.createContext(defaultDiagramViewportValueContext);
+const DiagramViewportContext = React.createContext(defaultDiagramViewportContextValue);
 
 export default DiagramViewportContext;

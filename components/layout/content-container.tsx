@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { contentHeight } from "@/constants/layout-size-constants";
+import { contentHeight } from "constants/layout-size-constants";
 
 const Container = styled.div`
     height: ${contentHeight.desktop};

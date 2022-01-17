@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import DiagramViewportContext from "context/diagram-viewport-context";
 import { BackgroundVariant } from "react-flow-renderer";
@@ -11,24 +11,23 @@ const Container = styled.div`
     grid-column-gap: 10px;
 `;
 const BackgroundButton = styled.div`
-    :hover{
+    :hover {
         cursor: pointer;
     }
 `;
 const ControlsButton = styled.div`
-    :hover{
+    :hover {
         cursor: pointer;
     }
 `;
 const MapButton = styled.div`
-    :hover{
+    :hover {
         cursor: pointer;
     }
 `;
 
 const DiagramViewportButtons = () => {
     const { background, setBackground, controls, setControls, map, setMap } = useContext(DiagramViewportContext);
-
     const changeViewport = (button: string) : void => {
         switch(button){
             case "background":

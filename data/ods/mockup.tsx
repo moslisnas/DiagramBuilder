@@ -1,3 +1,5 @@
+import OdsNode from "components/diagram/nodes/ods-node";
+
 export const ods = {
 	1: [
 		{
@@ -803,7 +805,7 @@ export const ods = {
 					anchor: 'syr-00057',
 					size: [4, 6],
 					relevant: true,
-					//indicatorPeriod: 'annual-4',
+					indicatorPeriod: 'annual-4',
 				},
 			],
 		},
@@ -874,5 +876,126 @@ export const ods = {
 				},
 			],
 		},
-	],
+	]
 };
+
+export const getOdsNodesData = ():any[] => {
+	const result:any[] = [];
+	let indicatorGap:number = 40;
+	let milestoneGap:number = 5;
+	let odsGap:number = 10;
+	let actualIndicatorPosition:number[] = [500, 0];
+	let actualMilestonePosition:number[] = [250, 0];
+	let actualOdsPosition:number[] = [0, 0];
+
+	//ODS iteration.
+	for (let [key, odsObject] of Object.entries(ods)) {
+		//Milestones iteration.
+		let firstMilestoneYPosition = actualMilestonePosition[1];
+		odsObject.map((milestone) => {
+			//Indicators iteration.
+			let firstIndicatorYPosition = actualIndicatorPosition[1];
+			milestone.indicadors.map((indicator) => {
+				//Push indicator.
+				result.push(
+					{
+						id: key+"."+milestone.fita+": "+indicator.name,
+						data: { label: indicator.name, id: indicator.anchor, odsNumber: key },
+						position: { x: actualIndicatorPosition[0], y: actualIndicatorPosition[1] },
+						type: "indicator",
+						targetPosition: "left",
+						draggable: false
+					}
+				);
+				actualIndicatorPosition[1] += indicatorGap;
+			});
+			let lastIndicatorYPosition = actualIndicatorPosition[1];
+
+			//Push milestone.
+			let indicatorsCount:number = milestone.indicadors ? milestone.indicadors.length : 0;
+			if(indicatorsCount>0){
+				actualMilestonePosition[1] = firstIndicatorYPosition + ((lastIndicatorYPosition-firstIndicatorYPosition)/2) - (indicatorGap/2);
+			}
+			else{
+				actualMilestonePosition[1] = firstIndicatorYPosition;
+			}
+			result.push(
+				{
+					id: key+"."+milestone.fita,
+					data: { label: key+"."+milestone.fita, number: milestone.fita, odsNumber: key, hasIndicators: indicatorsCount>0 },
+					position: { x: actualMilestonePosition[0], y: actualMilestonePosition[1] },
+					type: "milestone",
+					targetPosition: "left",
+					sourcePosition: "right",
+					draggable: false
+				}
+			);
+			if(indicatorsCount>0){
+				actualIndicatorPosition[1] += milestoneGap;
+			}
+			else{
+				actualIndicatorPosition[1] += indicatorGap + milestoneGap;
+			}
+		});
+		let lastMilestoneYPosition = actualMilestonePosition[1];
+
+		//Push ODS.
+		//TO DO --> Adjust in the middle of the milestones and add ODS gap.
+		//console.log(key+"--> firstMilestoneYPosition: " + firstMilestoneYPosition + ", lastMilestoneYPosition: " + lastMilestoneYPosition);
+		let milestonesCount:number = odsObject.length;
+		if(milestonesCount>0){
+			actualOdsPosition[1] = firstMilestoneYPosition + ((lastMilestoneYPosition-firstMilestoneYPosition)/2) - (milestoneGap/2);
+		}
+		else{
+			actualOdsPosition[1] = firstMilestoneYPosition;
+		}
+		//console.log(key+": " + actualOdsPosition[1]);
+		result.push(
+			{
+				id: key,
+				data: { label: key, number: key },
+				position: { x: actualOdsPosition[0], y: actualOdsPosition[1] },
+				type: "ods",
+				sourcePosition: "right",
+				draggable: false
+			}
+		);
+		if(milestonesCount>0){
+			actualOdsPosition[1] += odsGap;
+		}
+		else{
+			actualOdsPosition[1] += indicatorGap + milestoneGap + odsGap;
+		}
+	}
+
+	return result;
+};
+
+export const getOdsEdgesData = ():any[] => {
+	const result:any[] = [];
+
+	for (var [key, odsObject] of Object.entries(ods)) {
+		odsObject.map((milestone) => {
+			//Push ods-milestone relationship.
+			result.push(
+				{
+					id: "ods"+key+"-milestone"+milestone.fita,
+					source: key,
+					target: key+"."+milestone.fita
+				}
+			);
+			milestone.indicadors.map((indicator) => {
+				//Push milestone-indicator relationship.
+				result.push(
+					{
+						id: "ods"+key+"-milestone"+milestone.fita+"-indicator"+indicator.anchor,
+						source: key+"."+milestone.fita,
+						target: key+"."+milestone.fita+": "+indicator.name
+					}
+				);
+			});
+		});
+	}
+
+	return result;
+}

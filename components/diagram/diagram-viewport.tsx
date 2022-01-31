@@ -3,6 +3,9 @@ import styled from "styled-components";
 import ReactFlow, { Controls, MiniMap, Background, removeElements, addEdge } from "react-flow-renderer";
 import ThemeContext from "context/theme-context";
 import DiagramViewportContext from "context/diagram-viewport-context";
+import OdsNode from "components/diagram/nodes/ods-node";
+import MilestoneNode from "components/diagram/nodes/milestone-node";
+import IndicatorNode from "components/diagram/nodes/indicator-node";
 
 const Container = styled.div`
   height: 100%;
@@ -10,12 +13,12 @@ const Container = styled.div`
 `;
 
 const DiagramViewport = (props: { nodes:any[], nodesHandler:any, edges:any[], edgesHandler:any, elements:any[], elementsHandler:any }) => {
-    console.log("Nodes actually: ")
+    /*console.log("Nodes actually: ")
     console.log(props.nodes);
     console.log("Edges actually: ")
     console.log(props.edges);
     console.log("Elements actually: ")
-    console.log(props.elements);
+    console.log(props.elements);*/
     const { general } = useContext(ThemeContext);
     const { background, controls, map } = useContext(DiagramViewportContext);
     
@@ -38,6 +41,7 @@ const DiagramViewport = (props: { nodes:any[], nodesHandler:any, edges:any[], ed
         <Container>
           <ReactFlow
             elements={props.elements}
+            nodeTypes={{ ods: OdsNode, milestone: MilestoneNode, indicator: IndicatorNode }}
             onConnect={onConnect}
             onElementsRemove={onElementsRemove}
             deleteKeyCode={46}

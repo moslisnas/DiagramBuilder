@@ -1,5 +1,5 @@
 import { BackgroundVariant } from "react-flow-renderer";
-import { getOdsNodesData, getOdsEdgesData } from "data/ods/mockup";
+import { getAllOdsNodesData, getAllOdsEdgesData } from "data/ods/mockup";
 
 //Theme.
 export const defaultGeneralTheme = "light";
@@ -44,5 +44,5 @@ export const defaultEdges = [
 ];
 
 //ODS diagram data.
-export const defaultOdsNodes = getOdsNodesData();
-export const defaultOdsEdges = getOdsEdgesData();
+export const defaultOdsNodes = getAllOdsNodesData();
+export const defaultOdsEdges = getAllOdsEdgesData();

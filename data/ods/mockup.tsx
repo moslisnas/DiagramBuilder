@@ -1,5 +1,3 @@
-import OdsNode from "components/diagram/nodes/ods-node";
-
 export const ods = {
 	1: [
 		{
@@ -879,14 +877,15 @@ export const ods = {
 	]
 };
 
-export const getOdsNodesData = ():any[] => {
+export const getAllOdsNodesData = ():any[] => {
 	const result:any[] = [];
-	let indicatorGap:number = 40;
+	let indicatorGap:number = 35;
 	let milestoneGap:number = 5;
-	let odsGap:number = 10;
-	let actualIndicatorPosition:number[] = [500, 0];
-	let actualMilestonePosition:number[] = [250, 0];
+	let actualIndicatorPosition:number[] = [200, 0];
+	let actualMilestonePosition:number[] = [100, 0];
 	let actualOdsPosition:number[] = [0, 0];
+	let milestoneVerticalDisplacement:number = -15;
+	let odsVerticalDisplacement:number = 25;
 
 	//ODS iteration.
 	for (let [key, odsObject] of Object.entries(ods)) {
@@ -914,10 +913,10 @@ export const getOdsNodesData = ():any[] => {
 			//Push milestone.
 			let indicatorsCount:number = milestone.indicadors ? milestone.indicadors.length : 0;
 			if(indicatorsCount>0){
-				actualMilestonePosition[1] = firstIndicatorYPosition + ((lastIndicatorYPosition-firstIndicatorYPosition)/2) - (indicatorGap/2);
+				actualMilestonePosition[1] = firstIndicatorYPosition + ((lastIndicatorYPosition-firstIndicatorYPosition)/2)-(indicatorGap/2)+milestoneVerticalDisplacement;
 			}
 			else{
-				actualMilestonePosition[1] = firstIndicatorYPosition;
+				actualMilestonePosition[1] = firstIndicatorYPosition+milestoneVerticalDisplacement;
 			}
 			result.push(
 				{
@@ -940,16 +939,13 @@ export const getOdsNodesData = ():any[] => {
 		let lastMilestoneYPosition = actualMilestonePosition[1];
 
 		//Push ODS.
-		//TO DO --> Adjust in the middle of the milestones and add ODS gap.
-		//console.log(key+"--> firstMilestoneYPosition: " + firstMilestoneYPosition + ", lastMilestoneYPosition: " + lastMilestoneYPosition);
 		let milestonesCount:number = odsObject.length;
 		if(milestonesCount>0){
-			actualOdsPosition[1] = firstMilestoneYPosition + ((lastMilestoneYPosition-firstMilestoneYPosition)/2) - (milestoneGap/2);
+			actualOdsPosition[1] = firstMilestoneYPosition + ((lastMilestoneYPosition-firstMilestoneYPosition)/2)+odsVerticalDisplacement;
 		}
 		else{
-			actualOdsPosition[1] = firstMilestoneYPosition;
+			actualOdsPosition[1] = firstMilestoneYPosition+odsVerticalDisplacement;
 		}
-		//console.log(key+": " + actualOdsPosition[1]);
 		result.push(
 			{
 				id: key,
@@ -960,18 +956,11 @@ export const getOdsNodesData = ():any[] => {
 				draggable: false
 			}
 		);
-		if(milestonesCount>0){
-			actualOdsPosition[1] += odsGap;
-		}
-		else{
-			actualOdsPosition[1] += indicatorGap + milestoneGap + odsGap;
-		}
 	}
 
 	return result;
 };
-
-export const getOdsEdgesData = ():any[] => {
+export const getAllOdsEdgesData = ():any[] => {
 	const result:any[] = [];
 
 	for (var [key, odsObject] of Object.entries(ods)) {
@@ -996,6 +985,113 @@ export const getOdsEdgesData = ():any[] => {
 			});
 		});
 	}
+
+	return result;
+}
+
+export const getOdsNodesData = (odsNumber:number):any[] => {
+	const result:any[] = [];
+	let indicatorGap:number = 35;
+	let milestoneGap:number = 5;
+	let actualIndicatorPosition:number[] = [200, 0];
+	let actualMilestonePosition:number[] = [100, 0];
+	let actualOdsPosition:number[] = [0, 0];
+	let milestoneVerticalDisplacement:number = -15;
+	let odsVerticalDisplacement:number = 25;
+
+	//Milestones iteration.
+	let firstMilestoneYPosition = actualMilestonePosition[1];
+	ods[odsNumber].map((milestone:any) => {
+		//Indicators iteration.
+		let firstIndicatorYPosition = actualIndicatorPosition[1];
+		milestone.indicadors.map((indicator:any) => {
+			//Push indicator.
+			result.push(
+				{
+					id: odsNumber+"."+milestone.fita+": "+indicator.name,
+					data: { label: indicator.name, id: indicator.anchor, odsNumber: odsNumber },
+					position: { x: actualIndicatorPosition[0], y: actualIndicatorPosition[1] },
+					type: "indicator",
+					targetPosition: "left",
+					draggable: false
+				}
+			);
+			actualIndicatorPosition[1] += indicatorGap;
+		});
+		let lastIndicatorYPosition = actualIndicatorPosition[1];
+
+		//Push milestone.
+		let indicatorsCount:number = milestone.indicadors ? milestone.indicadors.length : 0;
+		if(indicatorsCount>0){
+			actualMilestonePosition[1] = firstIndicatorYPosition + ((lastIndicatorYPosition-firstIndicatorYPosition)/2)-(indicatorGap/2)+milestoneVerticalDisplacement;
+		}
+		else{
+			actualMilestonePosition[1] = firstIndicatorYPosition+milestoneVerticalDisplacement;
+		}
+		result.push(
+			{
+				id: odsNumber+"."+milestone.fita,
+				data: { label: odsNumber+"."+milestone.fita, number: milestone.fita, odsNumber: odsNumber, hasIndicators: indicatorsCount>0 },
+				position: { x: actualMilestonePosition[0], y: actualMilestonePosition[1] },
+				type: "milestone",
+				targetPosition: "left",
+				sourcePosition: "right",
+				draggable: false
+			}
+		);
+		if(indicatorsCount>0){
+			actualIndicatorPosition[1] += milestoneGap;
+		}
+		else{
+			actualIndicatorPosition[1] += indicatorGap + milestoneGap;
+		}
+	});
+	let lastMilestoneYPosition = actualMilestonePosition[1];
+
+	//Push ODS.
+	let milestonesCount:number = ods[odsNumber].length;
+	if(milestonesCount>0){
+		actualOdsPosition[1] = firstMilestoneYPosition + ((lastMilestoneYPosition-firstMilestoneYPosition)/2)+odsVerticalDisplacement;
+	}
+	else{
+		actualOdsPosition[1] = firstMilestoneYPosition+odsVerticalDisplacement;
+	}
+	result.push(
+		{
+			id: odsNumber,
+			data: { label: odsNumber, number: odsNumber },
+			position: { x: actualOdsPosition[0], y: actualOdsPosition[1] },
+			type: "ods",
+			sourcePosition: "right",
+			draggable: false
+		}
+	);
+
+	return result;
+};
+export const getOdsEdgesData = (odsNumber:number):any[] => {
+	const result:any[] = [];
+
+	ods[odsNumber].map((milestone:any) => {
+		//Push ods-milestone relationship.
+		result.push(
+			{
+				id: "ods"+odsNumber+"-milestone"+milestone.fita,
+				source: odsNumber,
+				target: odsNumber+"."+milestone.fita
+			}
+		);
+		milestone.indicadors.map((indicator:any) => {
+			//Push milestone-indicator relationship.
+			result.push(
+				{
+					id: "ods"+odsNumber+"-milestone"+milestone.fita+"-indicator"+indicator.anchor,
+					source: odsNumber+"."+milestone.fita,
+					target: odsNumber+"."+milestone.fita+": "+indicator.name
+				}
+			);
+		});
+	});
 
 	return result;
 }

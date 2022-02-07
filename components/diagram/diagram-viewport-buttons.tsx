@@ -62,10 +62,10 @@ const DiagramViewportButtons = () => {
                 <img
                     src={
                         background.variant===BackgroundVariant.Lines ?
-                            "icons/menus/background-dots32px.png"
+                            "/icons/menus/background-dots32px.png"
                             : background.variant===BackgroundVariant.Dots ?
-                                "icons/menus/background-empty32px.png"
-                            : "icons/menus/background-square32px.png"
+                                "/icons/menus/background-empty32px.png"
+                            : "/icons/menus/background-square32px.png"
                     }
                     width="30px"
                     height="30px"
@@ -73,10 +73,10 @@ const DiagramViewportButtons = () => {
                 />
             </BackgroundButton>
             <ControlsButton onClick={() => changeViewport('controls')}>
-                <img src="icons/menus/buttons32px.png" width="30px" height="30px" style={{verticalAlign: 'middle'}} />
+                <img src="/icons/menus/buttons32px.png" width="30px" height="30px" style={{verticalAlign: 'middle'}} />
             </ControlsButton>
             <MapButton onClick={() => changeViewport('map')}>
-                <img src="icons/menus/map32px.png" width="30px" height="30px" style={{verticalAlign: 'middle'}} />
+                <img src="/icons/menus/map32px.png" width="30px" height="30px" style={{verticalAlign: 'middle'}} />
             </MapButton>
         </Container>
     )

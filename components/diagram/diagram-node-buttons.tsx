@@ -30,7 +30,7 @@ const DiagramNodeButtons = (props: { nodes:any[], nodesHandler:any, edges:any[],
         <Container>
             <AddNodeButton onClick={() => addNode()}>
                 <img
-                    src={"icons/menus/plus32px.png"}
+                    src={"/icons/menus/plus32px.png"}
                     width="30px"
                     height="30px"
                     style={{verticalAlign: 'middle'}}

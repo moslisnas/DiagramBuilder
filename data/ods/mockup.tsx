@@ -1,4 +1,4 @@
-export const ods = {
+export const ods:any = {
 	1: [
 		{
 			fita: 2,
@@ -989,7 +989,7 @@ export const getAllOdsEdgesData = ():any[] => {
 	return result;
 }
 
-export const getOdsNodesData = (odsNumber:any):any[] => {
+export const getOdsNodesData = (odsNumber:number):any[] => {
 	const result:any[] = [];
 	let indicatorGap:number = 35;
 	let milestoneGap:number = 5;
@@ -1001,10 +1001,7 @@ export const getOdsNodesData = (odsNumber:any):any[] => {
 
 	//Milestones iteration.
 	let firstMilestoneYPosition = actualMilestonePosition[1];
-	console.log(ods);
-	console.log(odsNumber);
-	console.log(ods[odsNumber]);
-	ods[1].map((milestone:any) => {
+	ods[odsNumber].map((milestone:any) => {
 		//Indicators iteration.
 		let firstIndicatorYPosition = actualIndicatorPosition[1];
 		milestone.indicadors.map((indicator:any) => {
@@ -1052,7 +1049,7 @@ export const getOdsNodesData = (odsNumber:any):any[] => {
 	let lastMilestoneYPosition = actualMilestonePosition[1];
 
 	//Push ODS.
-	let milestonesCount:number = ods[1].length;
+	let milestonesCount:number = ods[odsNumber].length;
 	if(milestonesCount>0){
 		actualOdsPosition[1] = firstMilestoneYPosition + ((lastMilestoneYPosition-firstMilestoneYPosition)/2)+odsVerticalDisplacement;
 	}
@@ -1075,7 +1072,7 @@ export const getOdsNodesData = (odsNumber:any):any[] => {
 export const getOdsEdgesData = (odsNumber:number):any[] => {
 	const result:any[] = [];
 
-	ods[1].map((milestone:any) => {
+	ods[odsNumber].map((milestone:any) => {
 		//Push ods-milestone relationship.
 		result.push(
 			{

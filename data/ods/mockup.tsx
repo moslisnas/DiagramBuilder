@@ -879,10 +879,40 @@ export const ods:any = {
 
 export const getAllOdsNodesData = ():any[] => {
 	const result:any[] = [];
+	let actualOdsPosition:number[] = [0, 0];
+	let odsHorizontalGap = 75;
+
+	//ODS iteration.
+	for (let [key, odsObject] of Object.entries(ods)) {
+		//Push ODS.
+		result.push(
+			{
+				id: key,
+				data: { label: key, number: key },
+				position: { x: actualOdsPosition[0], y: actualOdsPosition[1] },
+				type: "ods",
+				sourcePosition: "right",
+				draggable: false
+			}
+		);
+		actualOdsPosition[0] += odsHorizontalGap;
+	}
+
+
+	return result;
+}
+export const getAllOdsEdgesData = ():any[] => {
+	const result:any[] = [];
+
+	return result;
+}
+
+export const getAllOdsNodesWithDependenciesData = ():any[] => {
+	const result:any[] = [];
 	let indicatorGap:number = 35;
 	let milestoneGap:number = 5;
-	let actualIndicatorPosition:number[] = [200, 0];
-	let actualMilestonePosition:number[] = [100, 0];
+	let actualIndicatorPosition:number[] = [350, 0];
+	let actualMilestonePosition:number[] = [150, 0];
 	let actualOdsPosition:number[] = [0, 0];
 	let milestoneVerticalDisplacement:number = -15;
 	let odsVerticalDisplacement:number = 25;
@@ -960,26 +990,41 @@ export const getAllOdsNodesData = ():any[] => {
 
 	return result;
 };
-export const getAllOdsEdgesData = ():any[] => {
+export const getAllOdsEdgesWithDependenciesData = ():any[] => {
 	const result:any[] = [];
 
 	for (var [key, odsObject] of Object.entries(ods)) {
 		odsObject.map((milestone) => {
 			//Push ods-milestone relationship.
-			result.push(
-				{
-					id: "ods"+key+"-milestone"+milestone.fita,
-					source: key,
-					target: key+"."+milestone.fita
-				}
-			);
+			if(milestone.indicadors && milestone.indicadors.length>0){
+				result.push(
+					{
+						id: "ods"+key+"-milestone"+milestone.fita,
+						source: key,
+						target: key+"."+milestone.fita,
+						animated: true,
+						style: { stroke: '#000000' }
+					}
+				);
+			}
+			else{
+				result.push(
+					{
+						id: "ods"+key+"-milestone"+milestone.fita,
+						source: key,
+						target: key+"."+milestone.fita
+					}
+				);
+			}
 			milestone.indicadors.map((indicator) => {
 				//Push milestone-indicator relationship.
 				result.push(
 					{
 						id: "ods"+key+"-milestone"+milestone.fita+"-indicator"+indicator.anchor,
 						source: key+"."+milestone.fita,
-						target: key+"."+milestone.fita+": "+indicator.name
+						target: key+"."+milestone.fita+": "+indicator.name,
+						animated: true,
+						style: { stroke: '#000000' }
 					}
 				);
 			});
@@ -993,8 +1038,8 @@ export const getOdsNodesData = (odsNumber:number):any[] => {
 	const result:any[] = [];
 	let indicatorGap:number = 35;
 	let milestoneGap:number = 5;
-	let actualIndicatorPosition:number[] = [200, 0];
-	let actualMilestonePosition:number[] = [100, 0];
+	let actualIndicatorPosition:number[] = [350, 0];
+	let actualMilestonePosition:number[] = [150, 0];
 	let actualOdsPosition:number[] = [0, 0];
 	let milestoneVerticalDisplacement:number = -15;
 	let odsVerticalDisplacement:number = 25;
@@ -1074,20 +1119,37 @@ export const getOdsEdgesData = (odsNumber:number):any[] => {
 
 	ods[odsNumber].map((milestone:any) => {
 		//Push ods-milestone relationship.
-		result.push(
-			{
-				id: "ods"+odsNumber+"-milestone"+milestone.fita,
-				source: odsNumber,
-				target: odsNumber+"."+milestone.fita
-			}
-		);
+		if(milestone.indicadors && milestone.indicadors.length>0){
+			result.push(
+				{
+					id: "ods"+odsNumber+"-milestone"+milestone.fita,
+					source: odsNumber,
+					target: odsNumber+"."+milestone.fita,
+					animated: true,
+					style: { stroke: '#000000' }
+				}
+			);
+		}
+		else{
+			result.push(
+				{
+					id: "ods"+odsNumber+"-milestone"+milestone.fita,
+					source: odsNumber,
+					target: odsNumber+"."+milestone.fita,
+					animated: false,
+					style: { stroke: '#000000' }
+				}
+			);
+		}
 		milestone.indicadors.map((indicator:any) => {
 			//Push milestone-indicator relationship.
 			result.push(
 				{
 					id: "ods"+odsNumber+"-milestone"+milestone.fita+"-indicator"+indicator.anchor,
 					source: odsNumber+"."+milestone.fita,
-					target: odsNumber+"."+milestone.fita+": "+indicator.name
+					target: odsNumber+"."+milestone.fita+": "+indicator.name,
+					animated: true,
+					style: { stroke: '#000000' }
 				}
 			);
 		});

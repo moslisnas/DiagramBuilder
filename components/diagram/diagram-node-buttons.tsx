@@ -5,14 +5,15 @@ import { combineElements, getLastNodeId } from "utils/diagram-functions";
 
 const Container = styled.div`
     height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-column-gap: 10px;
+    display: flex;
 `;
 const AddNodeButton = styled.div`
     :hover {
         cursor: pointer;
     }
+`;
+const GlobalDiagramButton = styled.a`
+    margin-left: 10px;
 `;
 
 const DiagramNodeButtons = (props: { nodes:any[], nodesHandler:any, edges:any[], edgesHandler:any, elements:any[], elementsHandler:any }) => {
@@ -30,12 +31,20 @@ const DiagramNodeButtons = (props: { nodes:any[], nodesHandler:any, edges:any[],
         <Container>
             <AddNodeButton onClick={() => addNode()}>
                 <img
-                    src={"/icons/menus/plus32px.png"}
+                    src={"/icons/menus/ods/plus32px.png"}
                     width="30px"
                     height="30px"
                     style={{verticalAlign: 'middle'}}
                 />
             </AddNodeButton>
+            <GlobalDiagramButton href="/ods">
+                <img
+                    src={"/icons/menus/ods/2030agenda32px.png"}
+                    width="30px"
+                    height="30px"
+                    style={{verticalAlign: 'middle'}}
+                />
+            </GlobalDiagramButton>
         </Container>
     )
 };

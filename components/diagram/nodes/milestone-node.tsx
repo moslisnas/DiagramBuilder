@@ -5,6 +5,7 @@ import { Handle, Position } from 'react-flow-renderer';
 
 const MilestoneNodeContainer = styled.span<{color:string; fontColor:string}>`
     display: block;
+    min-width: 100px;
     padding-left: 20px;
     padding-right: 20px;
     border-radius: 2px;

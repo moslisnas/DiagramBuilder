@@ -13,6 +13,7 @@ const IndicatorNodeContainer = styled.span<{borderColor:string}>`
     border-width: 1px;
     border-color: ${(props) => props.borderColor};
     color: black;
+    cursor: pointer;
 `;
 const IndicatorNodeText = styled.p`
     margin: 0px;

@@ -33,12 +33,6 @@ const OdsNode = (props: { data:OdsNodeProps }) => {
             {ods===undefined && (
                 <a href={`/ods/${props.data.number}`}>
                     <OdsNodeText>{props.data.label}</OdsNodeText>
-                    <Handle
-                        type="source"
-                        position={Position.Right}
-                        id="b"
-                        style={{ top: '50%', borderRadius: "50%" }}
-                    />
                 </a>
             )}
             {ods && (

@@ -12,10 +12,10 @@ export const defaultBackground = {
     "size": 1 
 };
 export const defaultControls = {
-    "enabled": true
+    "enabled": false
 };
 export const defaultMap = {
-    "enabled": true
+    "enabled": false
 };
 
 //Diagram data.

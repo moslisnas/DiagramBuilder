@@ -29,7 +29,7 @@ const Header = () => {
     return(
         <Container mode={general}>
             <LeftContainer>
-                <Title>Diagrams</Title>
+                <Title><a href="/">Diagrams</a></Title>
             </LeftContainer>
             <RightContainer>
             </RightContainer>

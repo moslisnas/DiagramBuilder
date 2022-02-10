@@ -5,9 +5,9 @@ import { defaultBackground, defaultControls, defaultMap, defaultOdsNodes, defaul
 import ContentContainer from "components/layout/content-container";
 import DiagramViewport from "components/diagram/diagram-viewport";
 import DiagramMenuBar from "components/diagram/diagram-menu-bar";
-import OdsNode from "components/diagram/nodes/ods-node";
-import MilestoneNode from "components/diagram/nodes/milestone-node";
-import IndicatorNode from "components/diagram/nodes/indicator-node";
+import OdsNode from "components/diagram/nodes/ods/ods-node";
+import MilestoneNode from "components/diagram/nodes/ods/milestone-node";
+import IndicatorNode from "components/diagram/nodes/ods/indicator-node";
 import { getOdsNodesData, getOdsEdgesData, getAllOdsEdgesData, getAllOdsNodesData } from "data/ods/mockup";
 
 interface DiagramWorkspaceOdsProps{

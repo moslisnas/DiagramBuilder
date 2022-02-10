@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import ThemeContext from "context/theme-context";
 import { defaultGeneralTheme } from "components/diagram/default";
 import Header from "components/layout/header";
-import DiagramWorkspaceOds from "components/diagram/workspaces/diagram-workspace-ods";
+import DiagramWorkspaceOds from "components/diagram/workspaces/ods/diagram-workspace-ods";
 
 const Home:NextPage = () => {
   const router = useRouter();

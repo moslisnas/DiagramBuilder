@@ -19,6 +19,12 @@ Based on https://github.com/moslisnas/React-WebTemplate, https://github.com/wbkd
     npm install react-beautiful-dnd --save
     npm install @types/react-beautiful-dnd --save-dev
     ```
+* Animations:
+    * Framer motion (require React 16.8 or greater):
+    ```
+    npm install framer-motion --save
+    ```
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

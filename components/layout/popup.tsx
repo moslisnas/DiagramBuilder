@@ -5,10 +5,10 @@ const Mask = styled.div<{color?:string}>`
     width: 100vw;
     height: 100vh;
     padding: 10% 0px;
-    top: 0px;
-    left: 0px;
-    position: static;
-    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
     overflow: auto;
     text-align: center;
     background-color: ${(props) => props.color ? props.color : 'rgba(0, 0, 0, 0.8)'};

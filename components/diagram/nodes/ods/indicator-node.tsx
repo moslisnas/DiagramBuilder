@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useContext } from "react";
 import styled from "styled-components";
 import { Handle, Position } from 'react-flow-renderer';
+import PopupContext from "context/popup-context";
 import { odsColors } from "utils/ods-colors";
-import Popup from "components/diagram/utils/popup";
 
 const IndicatorNodeContainer = styled.span<{borderColor:string}>`
     display: block;
@@ -40,6 +40,7 @@ const CloseModalButton = styled.div`
     position: absolute;
     float: right;
     width: 10px;
+    cursor: pointer;
 `;
 
 interface IndicatorNodeProps{
@@ -49,10 +50,24 @@ interface IndicatorNodeProps{
 }
 
 const IndicatorNode = (props: { data:IndicatorNodeProps }) => {
-    const [popup, setPopup] = useState(false);
+    const { setShow, setChildren } = useContext(PopupContext);
+
+    const openPopup = () => {
+        setShow(true);
+        setChildren(
+            <>
+                <CloseModalButton onClick={() => setShow(false)}>X</CloseModalButton>
+                <IndicatorModalTitle>
+                    {props.data.label}
+                </IndicatorModalTitle>
+                <Indicator>
+                </Indicator>
+            </>
+        );
+    }
 
     return(
-        <IndicatorNodeContainer borderColor={odsColors[props.data.odsNumber]["color"]} onClick={() => setPopup(true)}>
+        <IndicatorNodeContainer borderColor={odsColors[props.data.odsNumber]["color"]} onClick={() => openPopup()}>
             <IndicatorNodeText>{props.data.label}</IndicatorNodeText>
             <Handle
                 type="target"
@@ -60,16 +75,6 @@ const IndicatorNode = (props: { data:IndicatorNodeProps }) => {
                 id="a"
                 style={{ top: '50%', borderRadius: "50%" }}
             />
-            {popup && (
-                <Popup width="50%" height="75%">
-                    <CloseModalButton onClick={() => setPopup(false)}>X</CloseModalButton>
-                    <IndicatorModalTitle>
-                        {props.data.label}
-                    </IndicatorModalTitle>
-                    <Indicator>
-                    </Indicator>
-                </Popup>
-            )}
         </IndicatorNodeContainer>
     );
 }

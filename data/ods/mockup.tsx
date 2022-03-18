@@ -1,4 +1,25 @@
-export const ods:any = {
+interface IndicatorElement{
+	name: string;
+	anchor: string;
+	size: number[];
+	relevant?: boolean;
+	negativeTrend?: boolean;
+	trendValueTag?: string;
+	indicatorPeriod?: string;
+};
+interface MilestoneElement{
+	fita: number|string;
+	nom: string;
+	indicadors: IndicatorElement[];
+};
+interface OdsArray{
+	1: MilestoneElement[]; 2: MilestoneElement[]; 3: MilestoneElement[]; 4: MilestoneElement[]; 5: MilestoneElement[];
+	6: MilestoneElement[]; 7: MilestoneElement[]; 8: MilestoneElement[]; 9: MilestoneElement[]; 10: MilestoneElement[];
+	11: MilestoneElement[]; 12: MilestoneElement[]; 13: MilestoneElement[]; 14: MilestoneElement[]; 15: MilestoneElement[];
+	16: MilestoneElement[]; 17: MilestoneElement[];
+};
+
+export const ods:OdsArray = {
 	1: [
 		{
 			fita: 2,
@@ -65,7 +86,6 @@ export const ods:any = {
 		{
 			fita: 3,
 			nom: 'ods2.customers.defaultPublic.milestones.3.name',
-			logo: '/static/icons/ods/2/fites/3',
 			indicadors: [
 				{
 					name: 'syr-00018.title',
@@ -360,7 +380,6 @@ export const ods:any = {
 		{
 			fita: 6,
 			nom: 'ods8.customers.defaultPublic.milestones.6.name',
-			logo: '/static/icons/ods/8/fites/6',
 			indicadors: [
 				{
 					name: 'syr-00017.title',
@@ -374,7 +393,6 @@ export const ods:any = {
 		{
 			fita: 8,
 			nom: 'ods8.customers.defaultPublic.milestones.8.name',
-			logo: '/static/icons/ods/8/fites/8',
 			indicadors: [
 				{
 					name: 'syr-00025.title',
@@ -436,7 +454,6 @@ export const ods:any = {
 		{
 			fita: 2,
 			nom: 'ods9.customers.defaultPublic.milestones.2.name',
-			logo: '/static/icons/ods/9/fites/2',
 			indicadors: [
 				{
 					name: 'syr-00020.title',
@@ -525,7 +542,6 @@ export const ods:any = {
 		{
 			fita: 3,
 			nom: 'ods10.customers.defaultPublic.milestones.3.name',
-			logo: '/static/icons/ods/10/fites/3',
 			indicadors: [
 				{
 					name: 'syr-00019.title',
@@ -921,10 +937,10 @@ export const getAllOdsNodesWithDependenciesData = ():any[] => {
 	for (let [key, odsObject] of Object.entries(ods)) {
 		//Milestones iteration.
 		let firstMilestoneYPosition = actualMilestonePosition[1];
-		odsObject.map((milestone) => {
+		odsObject.map((milestone:MilestoneElement) => {
 			//Indicators iteration.
 			let firstIndicatorYPosition = actualIndicatorPosition[1];
-			milestone.indicadors.map((indicator) => {
+			milestone.indicadors.map((indicator:IndicatorElement) => {
 				//Push indicator.
 				result.push(
 					{
@@ -994,7 +1010,7 @@ export const getAllOdsEdgesWithDependenciesData = ():any[] => {
 	const result:any[] = [];
 
 	for (var [key, odsObject] of Object.entries(ods)) {
-		odsObject.map((milestone) => {
+		odsObject.map((milestone:MilestoneElement) => {
 			//Push ods-milestone relationship.
 			if(milestone.indicadors && milestone.indicadors.length>0){
 				result.push(
@@ -1034,7 +1050,7 @@ export const getAllOdsEdgesWithDependenciesData = ():any[] => {
 	return result;
 }
 
-export const getOdsNodesData = (odsNumber:number):any[] => {
+export const getOdsNodesData = (odsNumber:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17):any[] => {
 	const result:any[] = [];
 	let indicatorGap:number = 35;
 	let milestoneGap:number = 5;
@@ -1046,10 +1062,10 @@ export const getOdsNodesData = (odsNumber:number):any[] => {
 
 	//Milestones iteration.
 	let firstMilestoneYPosition = actualMilestonePosition[1];
-	ods[odsNumber].map((milestone:any) => {
+	ods[odsNumber].map((milestone:MilestoneElement) => {
 		//Indicators iteration.
 		let firstIndicatorYPosition = actualIndicatorPosition[1];
-		milestone.indicadors.map((indicator:any) => {
+		milestone.indicadors.map((indicator:IndicatorElement) => {
 			//Push indicator.
 			result.push(
 				{
@@ -1114,7 +1130,7 @@ export const getOdsNodesData = (odsNumber:number):any[] => {
 
 	return result;
 };
-export const getOdsEdgesData = (odsNumber:number):any[] => {
+export const getOdsEdgesData = (odsNumber:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17):any[] => {
 	const result:any[] = [];
 
 	ods[odsNumber].map((milestone:any) => {

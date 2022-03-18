@@ -17,7 +17,7 @@ const GlobalDiagramButton = styled.a`
 `;
 
 const DiagramNodeButtons = (props: { nodes:any[], nodesHandler:any, edges:any[], edgesHandler:any, elements:any[], elementsHandler:any }) => {
-    const addNode = () => {
+    /*const addNode = () => {
         const newNode = {
           id: (1+getLastNodeId(props.nodes)).toString(),
           type: 'input',
@@ -26,17 +26,17 @@ const DiagramNodeButtons = (props: { nodes:any[], nodesHandler:any, edges:any[],
         };
         props.nodesHandler([...props.nodes, newNode]);
         props.elementsHandler([...props.elements, newNode]);
-    };
+    };*/
     return(
         <Container>
-            <AddNodeButton onClick={() => addNode()}>
+            {/*<AddNodeButton onClick={() => addNode()}>
                 <img
                     src={"/icons/menus/ods/plus32px.png"}
                     width="30px"
                     height="30px"
                     style={{verticalAlign: 'middle'}}
                 />
-            </AddNodeButton>
+            </AddNodeButton>*/}
             <GlobalDiagramButton href="/ods">
                 <img
                     src={"/icons/menus/ods/2030agenda32px.png"}

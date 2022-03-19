@@ -5,7 +5,7 @@ import PopupContext from "context/popup-context";
 import { defaultGeneralTheme } from "components/diagram/default";
 import Header from "components/layout/header";
 import Popup from "components/layout/popup";
-import Agenda2030 from "components/navigator/ods/agenda-2030";
+import DiagramWorkspaceOds from "components/diagram/workspaces/ods/diagram-workspace-ods";
 
 const Home:NextPage = () => {
   //Theme.
@@ -20,8 +20,8 @@ const Home:NextPage = () => {
     <div style={{width: "100vw", height: "100vh"}}>
       <ThemeContext.Provider value={valueThemeProvider}>
         <Header />
-        <Agenda2030 />
         <PopupContext.Provider value={valuePopupProvider}>
+          <DiagramWorkspaceOds />
           {show && (
             <Popup width="50%" height="75%">
               {children}

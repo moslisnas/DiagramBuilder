@@ -4,7 +4,6 @@ import { contentHeight } from "constants/layout-size-constants";
 
 const Container = styled.div`
     height: ${contentHeight.desktop};
-    background-color: #DDDDDD;
     padding: 20px;
 `;
 

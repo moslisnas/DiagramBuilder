@@ -22,7 +22,6 @@ const Home:NextPage = () => {
   return (
     <div style={{width: "100vw", height: "100vh"}}>
       <ThemeContext.Provider value={valueThemeProvider}>
-        <Header />
         <PopupContext.Provider value={valuePopupProvider}>
           <DiagramWorkspaceOds ods={parseInt(ods)} />
           {show && (

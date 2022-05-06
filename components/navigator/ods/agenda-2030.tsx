@@ -27,8 +27,8 @@ const Agenda2030 = (props: Agenda2030Props) => {
 
     return (
         <Container>
-            <motion.div  initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 1 }}>
-                <motion.div animate={navigate ? { scale: 0 } : { scale: 1 }} transition={{ duration: 1 }}>
+            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 1 }}>
+                <motion.div animate={navigate ? { scale: 0, rotate: 180} : { scale: 1 }} transition={{ duration: 1 }}>
                     <Wheel width="343" height="343" viewBox="0 0 343 343" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <a href="/ods/1" onClick={(event) => animateAndNavigate(event, "/ods/1")}>
                             <path style={{cursor: "pointer"}} fill="#EB1C2D" d="M201.366 79.6041L228.482 9.58935C212.372 3.91046 195.141 0.597778 177.237 0V75.046C185.604 75.5442 193.696 77.1133 201.366 79.6041Z" />

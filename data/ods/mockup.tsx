@@ -1050,7 +1050,7 @@ export const getAllOdsEdgesWithDependenciesData = ():any[] => {
 	return result;
 }
 
-export const getOdsNodesData = (odsNumber:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17):any[] => {
+export const getOdsNodesData = (odsNumber:number|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17):any[] => {
 	const result:any[] = [];
 	let indicatorGap:number = 35;
 	let milestoneGap:number = 5;
@@ -1130,7 +1130,7 @@ export const getOdsNodesData = (odsNumber:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16
 
 	return result;
 };
-export const getOdsEdgesData = (odsNumber:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17):any[] => {
+export const getOdsEdgesData = (odsNumber:number|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17):any[] => {
 	const result:any[] = [];
 
 	ods[odsNumber].map((milestone:any) => {

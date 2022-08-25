@@ -45,6 +45,14 @@ const DiagramNodeButtons = (props: { nodes:any[], nodesHandler:any, edges:any[],
                     style={{verticalAlign: 'middle'}}
                 />
             </GlobalDiagramButton>
+            <GlobalDiagramButton href="/infrastructure">
+                <img
+                    src={"/icons/menus/infrastructure/server512px.svg"}
+                    width="30px"
+                    height="30px"
+                    style={{verticalAlign: 'middle'}}
+                />
+            </GlobalDiagramButton>
         </Container>
     )
 };

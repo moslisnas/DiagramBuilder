@@ -10,7 +10,7 @@ import DiagramWorkspaceOds from "components/diagram/workspaces/ods/diagram-works
 
 const Home:NextPage = () => {
   const router = useRouter();
-  const { ods } = router.query;
+  const ods = router.query.ods ? router.query.ods.toString(): '0';
   //Theme.
   const [general, setGeneral] = useState(defaultGeneralTheme);
   const valueThemeProvider:any = { general, setGeneral };

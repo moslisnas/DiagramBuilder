@@ -6,13 +6,13 @@ import { defaultBackground, defaultControls, defaultMap, defaultOdsNodes, defaul
 import ContentContainer from "components/layout/content-container";
 import DiagramViewport from "components/diagram/diagram-viewport";
 import DiagramMenuBar from "components/diagram/diagram-menu-bar";
-import OdsNode from "components/diagram/nodes/ods/ods-node";
-import MilestoneNode from "components/diagram/nodes/ods/milestone-node";
-import IndicatorNode from "components/diagram/nodes/ods/indicator-node";
+import OdsNode from "components/diagram/nodes/ods/ods";
+import MilestoneNode from "components/diagram/nodes/ods/milestone";
+import IndicatorNode from "components/diagram/nodes/ods/indicator";
 import { getOdsNodesData, getOdsEdgesData, getAllOdsEdgesData, getAllOdsNodesData } from "data/ods/mockup";
 
 interface DiagramWorkspaceOdsProps{
-    ods?:number|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17;
+    ods?:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17;
 }
 
 const DiagramWorkspaceOds = (props: DiagramWorkspaceOdsProps) => {
@@ -33,7 +33,11 @@ const DiagramWorkspaceOds = (props: DiagramWorkspaceOdsProps) => {
             >
                 <DiagramMenuBar nodes={nodes} nodesHandler={setNodes} edges={edges} edgesHandler={setEdges} elements={elements} elementsHandler={setElements} />
                 <ContentContainer>
-                    <DiagramViewport nodes={nodes} nodesHandler={setNodes} edges={edges} edgesHandler={setEdges} elements={elements} elementsHandler={setElements} nodeTypes={{ ods: OdsNode, milestone: MilestoneNode, indicator: IndicatorNode }} />
+                    <DiagramViewport
+                        nodes={nodes} nodesHandler={setNodes}
+                        edges={edges} edgesHandler={setEdges}
+                        elements={elements} elementsHandler={setElements}
+                        nodeTypes={{ ods: OdsNode, milestone: MilestoneNode, indicator: IndicatorNode }} />
                 </ContentContainer>
             </motion.div>
         </DiagramViewportContext.Provider>

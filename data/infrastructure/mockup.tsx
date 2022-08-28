@@ -22,15 +22,23 @@ interface Server{
     memory: string;
     infrastructure: string;
     functionality: string;
-    dns: string;
-    ntp: string;
     virtualizationTechnology?: string;
 	osType: string;
 	osTemplate: string;
+	observationsOs: string;
+	networks: Network[];
+    dns: string;
+    ntp: string;
+	observationsNetwork: string;
 	backupPolicy: string;
     contingency: boolean;
     prd: boolean;
     prdPower?: string;
+	observationsBackup: string;
+}
+interface Network{
+	name: string;
+	value: string;
 }
 interface Application{
 	type: string;
@@ -55,9 +63,13 @@ const getInfrastructureById = (id:number) => {
 					{
 						type: "virtual", name: "WNBCST01", power: "2", memory: "16",
 						infrastructure: "CTTI Critics Cerdanyola", functionality: "Servidor consola NB Crítics PRE",
-						dns: "", ntp: "",
 						virtualizationTechnology: "VCO", osType: "Windows", osTemplate: "CTTI - Windows 2019 std",
-						backupPolicy: "Otro", contingency: false, prd: false
+						observationsOs: "Plantilla per al CTTI",
+						networks: [{name: "CAS", value: "CTT_MGM_PUB_BACKUP_CRITICS_PRE"}, {name: "BKP", value: "ICT_BKP_BACKUP-VERITAS_CRD_PRE"}],
+						dns: "", ntp: "",
+						observationsNetwork: "Ús del DNS intern de T-Systems",
+						backupPolicy: "Otro", contingency: false, prd: false,
+						observationsBackup: "Utilitzar la política 1 de T-Systems"
 					}
 				]
 			};
@@ -67,16 +79,24 @@ const getInfrastructureById = (id:number) => {
 					{
 						type: "virtual", name: "WNBCSP01", power: "2", memory: "16",
 						infrastructure: "CTTI Critics Cerdanyola", functionality: "Servidor consola NB Crítics",
-						dns: "", ntp: "",
 						virtualizationTechnology: "VCO", osType: "Windows", osTemplate: "CTTI - Windows 2019 std",
+						observationsOs: "Plantilla per al CTTI",
+						networks: [{name: "CAS", value: "CTT_MGM_PUB_BACKUP_CRITICS"}, {name: "BKP", value: "ICT_BKP_BACKUP-VERITAS_CRD"}],
+						dns: "", ntp: "",
+						observationsNetwork: "Ús del DNS intern de T-Systems",
 						backupPolicy: "Otro", contingency: false, prd: false,
+						observationsBackup: "Utilitzar la política 1 de T-Systems"
 					},
 					{
 						type: "virtual", name: "WNBCSP02", power: "2", memory: "16",
 						infrastructure: "CTTI Critics Cerdanyola", functionality: "Servidor consola NB Crítics #2",
-						dns: "", ntp: "",
 						virtualizationTechnology: "VCO", osType: "Windows", osTemplate: "CTTI - Windows 2019 std",
-						backupPolicy: "Otro", contingency: false, prd: false
+						observationsOs: "Plantilla per al CTTI",
+						networks: [{name: "CAS", value: "CTT_MGM_PUB_BACKUP_CRITICS"}, {name: "BKP", value: "ICT_BKP_BACKUP-VERITAS_CRD"}],
+						dns: "", ntp: "",
+						observationsNetwork: "Ús del DNS intern de T-Systems",
+						backupPolicy: "Otro", contingency: false, prd: false,
+						observationsBackup: "Utilitzar la política 1 de T-Systems"
 					}
 				]
 			};
@@ -90,7 +110,7 @@ const getInfrastructureById = (id:number) => {
 	return result;
 }
 
-export const getInfrastructureNodesData = (infrastructureId:number):any[] => {
+export const getInfrastructureNodesData = (infrastructureId:number, nodeDisplayHandler:any):any[] => {
 	const result:any[] = [];
 
 	let infrastructure = getInfrastructureById(infrastructureId);
@@ -106,6 +126,9 @@ export const getInfrastructureNodesData = (infrastructureId:number):any[] => {
 	let serverNodeWidth:number = nodeSizes.server[0];
 	let serverNodeXGap:number = nodeGaps.server[0];
 	let serverDisplacementX:number = serverNodeWidth + serverNodeXGap;
+	let networkNodeWidth:number = nodeSizes.network[0];
+	let networkNodeXGap:number = nodeGaps.network[0];
+	let networkDisplacementX:number = networkNodeWidth + networkNodeXGap;
 
 	//LLD version nodes.
 	infrastructure.lldVersions.map((version, index) => {
@@ -113,7 +136,7 @@ export const getInfrastructureNodesData = (infrastructureId:number):any[] => {
 			result.push(
 				{
 					id: `LLDVersion-${version.version}`,
-					data: { label: `${infrastructure.lld_name}(${version.version})`, number: version.version, firstVersion: index===0 },
+					data: { label: `${infrastructure.lld_name} (v${version.version})`, number: version.version, firstVersion: index===0 },
 					position: { x: index*lldVersionDisplacementX, y: 0 },
 					type: "lldVersion",
 					draggable: false
@@ -127,7 +150,7 @@ export const getInfrastructureNodesData = (infrastructureId:number):any[] => {
 		{
 			id: `LLD-${infrastructure.lldVersions[infrastructure.lldVersions.length-1].version}`,
 			data: {
-				label: `${infrastructure.lld_name}(${infrastructure.lldVersions[infrastructure.lldVersions.length-1].version})`,
+				label: `${infrastructure.lld_name} (v${infrastructure.lldVersions[infrastructure.lldVersions.length-1].version})`,
 				number: infrastructure.lldVersions[infrastructure.lldVersions.length-1].version,
 				hasVersions: infrastructure.lldVersions.length>1
 			},
@@ -145,7 +168,6 @@ export const getInfrastructureNodesData = (infrastructureId:number):any[] => {
 		totalServers += environment.servers.length;
 	});
 	let totalServersWidth = serverNodeWidth*totalServers + serverNodeXGap*(totalServers-1);
-	// console.log(totalServersWidth);
 	if(infrastructure.environments.length > 0){
 		if(totalServersWidth > totalEnvironmentsWidth){
 			position[0] += -(totalServersWidth/2);
@@ -159,7 +181,7 @@ export const getInfrastructureNodesData = (infrastructureId:number):any[] => {
 	position[0] += lldNodeWidth/2;
 
 	infrastructure.environments.map((environment) => {
-		let initialXPosition = position[0];
+		let initialEnvironmentXPosition = position[0];
 		//Servers.
 		environment.servers.map((server) => {
 			result.push(
@@ -172,19 +194,44 @@ export const getInfrastructureNodesData = (infrastructureId:number):any[] => {
 						memory: server.memory,
 						infrastructure: server.infrastructure,
 						functionality: server.functionality,
-						dns: server.dns,
-						ntp: server.ntp,
 						osType: server.osType,
 						osTemplate: server.osTemplate,
+						observationsOs: server.observationsOs,
+						dns: server.dns,
+						ntp: server.ntp,
+						observationsNetwork: server.observationsNetwork,
 						backupPolicy: server.backupPolicy,
 						contingency: server.contingency,
-						prd: server.prd
+						prd: server.prd,
+						observationsBackup: server.observationsBackup,
+						nodeDisplayHandler: nodeDisplayHandler
 					},
 					position: { x: position[0], y: position[1]+nodeSizes.environment[1]+nodeGaps.server[1] },
 					type: "server",
 					draggable: false
 				}
 			);
+			//Networks.
+			if(server.networks.length > 0){
+				let totalNetworksWidth = networkNodeWidth*server.networks.length + networkNodeXGap*(server.networks.length-1);
+				server.networks.map((network, index) => {
+					let networkXDisplacement = -(totalNetworksWidth/2)+(serverNodeWidth/2)+networkDisplacementX*index;
+					result.push(
+						{
+							id: `Network-${network.value}_Server-${server.name}`,
+							data: {
+								name: network.name,
+								value: network.value,
+								serverRelated: server.name,
+								observations: server.observationsNetwork
+							},
+							position: { x: position[0] + networkXDisplacement, y: position[1]+nodeSizes.environment[1]+nodeGaps.server[1]+nodeSizes.server[1]-50 },
+							type: "network",
+							draggable: false
+						}
+					);
+				});
+			}
 			position[0] += serverDisplacementX;
 		});
 		//Environment.
@@ -202,15 +249,17 @@ export const getInfrastructureNodesData = (infrastructureId:number):any[] => {
 					label: environment.name,
 					hasServers: environment.servers.length>0
 				},
-				position: { x: initialXPosition+environmentXFinalDisplacement, y: position[1] },
+				position: { x: initialEnvironmentXPosition+environmentXFinalDisplacement, y: position[1] },
 				type: "environment",
 				draggable: false
 			}
 		);
 	});
 
-
 	//Applications.
+	//Filesystems and disks.
+	//Networks.
+	//Users.
 
 	return result;
 };
@@ -264,6 +313,17 @@ export const getInfrastructureEdgesData = (infrastructureId:number):any[] => {
 					style: { stroke: '#000000' }
 				}
 			);
+			//Networks.
+			server.networks.map((network) => {
+				result.push(
+					{
+						id: `Network-${network.value}_Server-${server.name}-Server-${server.name}`,
+						source: `Server-${server.name}`,
+						target: `Network-${network.value}_Server-${server.name}`,
+						style: { stroke: '#000000' }
+					}
+				);
+			});
 		});
 	});
 

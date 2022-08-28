@@ -2,9 +2,9 @@ import React from "react";
 
 interface PopupContextValueProps{
     "show":boolean;
-    "setShow" :any;
+    "setShow":any;
     "children":any;
-    "setChildren" :any;
+    "setChildren":any;
 };
 
 const defaultPopupContextValue:PopupContextValueProps = {

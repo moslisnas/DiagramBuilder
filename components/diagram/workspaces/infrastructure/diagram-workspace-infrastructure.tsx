@@ -10,6 +10,7 @@ import LldNode from "components/diagram/nodes/infrastructure/lld";
 import LldVersionNode from "components/diagram/nodes/infrastructure/lld-version";
 import EnvironmentNode from "components/diagram/nodes/infrastructure/environment";
 import ServerNode from "components/diagram/nodes/infrastructure/server";
+import NetworkNode from "components/diagram/nodes/infrastructure/network";
 import { getInfrastructureNodesData, getInfrastructureEdgesData } from "data/infrastructure/mockup";
 interface DiagramWorkspaceInfrastructureProps{
     id?:number;
@@ -19,10 +20,10 @@ const DiagramWorkspaceInfrastructure = (props: DiagramWorkspaceInfrastructurePro
     const [background, setBackground] = useState(defaultBackground);
     const [controls, setControls] = useState(defaultControls);
     const [map, setMap] = useState(defaultMap);
-    const [nodes, setNodes] = useState(props.id ? getInfrastructureNodesData(props.id): []);
+    const valueDiagramViewportProvider:any = { background, setBackground, controls, setControls, map, setMap };
+    const [nodes, setNodes] = useState(props.id ? getInfrastructureNodesData(props.id, (value:any) => console.log(value)): []);
     const [edges, setEdges] = useState(props.id ? getInfrastructureEdgesData(props.id): []);
     const [elements, setElements] = useState(combineElements(nodes, edges));
-    const valueDiagramViewportProvider:any = { background, setBackground, controls, setControls, map, setMap };
 
     return(
         <DiagramViewportContext.Provider value={valueDiagramViewportProvider}>
@@ -37,7 +38,7 @@ const DiagramWorkspaceInfrastructure = (props: DiagramWorkspaceInfrastructurePro
                         nodes={nodes} nodesHandler={setNodes}
                         edges={edges} edgesHandler={setEdges}
                         elements={elements} elementsHandler={setElements}
-                        nodeTypes={{ lld: LldNode, lldVersion: LldVersionNode, environment: EnvironmentNode, server: ServerNode }} />
+                        nodeTypes={{ lld: LldNode, lldVersion: LldVersionNode, environment: EnvironmentNode, server: ServerNode, network: NetworkNode }} />
                 </ContentContainer>
             </motion.div>
         </DiagramViewportContext.Provider>

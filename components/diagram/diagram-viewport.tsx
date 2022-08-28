@@ -9,7 +9,17 @@ const Container = styled.div`
   background-color: white;
 `;
 
-const DiagramViewport = (props: { nodes:any[], nodesHandler:any, edges:any[], edgesHandler:any, elements:any[], elementsHandler:any, nodeTypes?:any }) => {
+interface DiagramViewportProps{
+  nodes:any[],
+  nodesHandler:any,
+  edges:any[],
+  edgesHandler:any,
+  elements:any[],
+  elementsHandler:any,
+  nodeTypes?:any,
+};
+
+const DiagramViewport = (props:DiagramViewportProps) => {
     /*console.log("Nodes actually: ")
     console.log(props.nodes);
     console.log("Edges actually: ")

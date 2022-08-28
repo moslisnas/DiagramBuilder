@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import DiagramViewportContext from "context/diagram-viewport-context";
-import { combineElements } from "utils/diagram-functions";
 import { defaultBackground, defaultControls, defaultMap, defaultOdsNodes, defaultOdsEdges } from "components/diagram/default";
 import ContentContainer from "components/layout/content-container";
 import DiagramViewport from "components/diagram/diagram-viewport";
@@ -21,7 +20,6 @@ const DiagramWorkspaceOds = (props: DiagramWorkspaceOdsProps) => {
     const [map, setMap] = useState(defaultMap);
     const [nodes, setNodes] = useState(props.ods ? getOdsNodesData(props.ods): getAllOdsNodesData);
     const [edges, setEdges] = useState(props.ods ? getOdsEdgesData(props.ods): getAllOdsEdgesData);
-    const [elements, setElements] = useState(combineElements(nodes, edges));
     const valueDiagramViewportProvider:any = { background, setBackground, controls, setControls, map, setMap };
 
     return(
@@ -31,12 +29,11 @@ const DiagramWorkspaceOds = (props: DiagramWorkspaceOdsProps) => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
             >
-                <DiagramMenuBar nodes={nodes} nodesHandler={setNodes} edges={edges} edgesHandler={setEdges} elements={elements} elementsHandler={setElements} />
+                <DiagramMenuBar nodes={nodes} nodesHandler={setNodes} edges={edges} edgesHandler={setEdges} />
                 <ContentContainer>
                     <DiagramViewport
                         nodes={nodes} nodesHandler={setNodes}
                         edges={edges} edgesHandler={setEdges}
-                        elements={elements} elementsHandler={setElements}
                         nodeTypes={{ ods: OdsNode, milestone: MilestoneNode, indicator: IndicatorNode }} />
                 </ContentContainer>
             </motion.div>

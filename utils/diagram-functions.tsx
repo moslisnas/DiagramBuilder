@@ -9,16 +9,3 @@ export const getLastNodeId = (nodes:any[]):number => {
 
     return result;
 }
-
-export const combineElements = (nodes:any[], edges:any[]): any[] => {
-    let result:any[] = [];
-
-    nodes.map((node) => {
-        result.push(node);
-    });
-    edges.map((edge) => {
-        result.push(edge);
-    });
-
-    return result;
-}

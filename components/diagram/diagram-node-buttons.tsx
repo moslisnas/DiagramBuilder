@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import ReactFlow from "react-flow-renderer";
-import { combineElements, getLastNodeId } from "utils/diagram-functions";
+import { getLastNodeId } from "utils/diagram-functions";
 
 const Container = styled.div`
     height: 100%;
@@ -16,7 +16,7 @@ const GlobalDiagramButton = styled.a`
     margin-left: 10px;
 `;
 
-const DiagramNodeButtons = (props: { nodes:any[], nodesHandler:any, edges:any[], edgesHandler:any, elements:any[], elementsHandler:any }) => {
+const DiagramNodeButtons = (props: { nodes:any[], nodesHandler:any, edges:any[], edgesHandler:any }) => {
     /*const addNode = () => {
         const newNode = {
           id: (1+getLastNodeId(props.nodes)).toString(),
@@ -25,7 +25,6 @@ const DiagramNodeButtons = (props: { nodes:any[], nodesHandler:any, edges:any[],
           position: { x: 0, y: 400 },
         };
         props.nodesHandler([...props.nodes, newNode]);
-        props.elementsHandler([...props.elements, newNode]);
     };*/
     return(
         <Container>

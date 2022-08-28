@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import ReactFlow, { Controls, MiniMap, Background, removeElements, addEdge } from "react-flow-renderer";
+import ReactFlow, { Controls, MiniMap, Background, addEdge } from "react-flow-renderer";
 import ThemeContext from "context/theme-context";
 import DiagramViewportContext from "context/diagram-viewport-context";
 
@@ -14,18 +14,14 @@ interface DiagramViewportProps{
   nodesHandler:any,
   edges:any[],
   edgesHandler:any,
-  elements:any[],
-  elementsHandler:any,
   nodeTypes?:any,
 };
 
 const DiagramViewport = (props:DiagramViewportProps) => {
-    /*console.log("Nodes actually: ")
-    console.log(props.nodes);
-    console.log("Edges actually: ")
-    console.log(props.edges);
-    console.log("Elements actually: ")
-    console.log(props.elements);*/
+    // console.log("Nodes actually: ");
+    // console.log(props.nodes);
+    // console.log("Edges actually: ");
+    // console.log(props.edges);
     const { general } = useContext(ThemeContext);
     const { background, controls, map } = useContext(DiagramViewportContext);
     
@@ -36,22 +32,16 @@ const DiagramViewport = (props:DiagramViewportProps) => {
         target: params.target
       }
       props.edgesHandler([...props.edges, newEdge]);
-      props.elementsHandler([...props.elements, newEdge]);
     }
-    const onElementsRemove = (elementsToRemove:any) => {
-      props.nodesHandler(props.nodes.filter((node:any) => node.id!==elementsToRemove[0]["id"]));
-      props.edgesHandler(props.edges.filter((edge:any) => edge.source!==elementsToRemove[0]["id"] && edge.target!==elementsToRemove[0]["id"]));
-      props.elementsHandler((els:any) => removeElements(elementsToRemove, els));
-    };
     
     return(
         <Container>
           <ReactFlow
-            elements={props.elements}
+            nodes={props.nodes}
+            edges={props.edges}
             nodeTypes={props.nodeTypes}
             onConnect={onConnect}
-            onElementsRemove={onElementsRemove}
-            deleteKeyCode={46}
+            deleteKeyCode={"_DELETE"}
             style={{
               backgroundColor: general==="light" ? "#FFFFFF" : "#222222"
             }}

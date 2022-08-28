@@ -1119,7 +1119,7 @@ export const getOdsNodesData = (odsNumber:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16
 	}
 	result.push(
 		{
-			id: odsNumber,
+			id: odsNumber.toString(),
 			data: { label: odsNumber, number: odsNumber },
 			position: { x: actualOdsPosition[0], y: actualOdsPosition[1] },
 			type: "ods",
@@ -1139,7 +1139,7 @@ export const getOdsEdgesData = (odsNumber:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16
 			result.push(
 				{
 					id: "ods"+odsNumber+"-milestone"+milestone.fita,
-					source: odsNumber,
+					source: odsNumber.toString(),
 					target: odsNumber+"."+milestone.fita,
 					animated: true,
 					style: { stroke: '#000000' }
@@ -1150,7 +1150,7 @@ export const getOdsEdgesData = (odsNumber:1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16
 			result.push(
 				{
 					id: "ods"+odsNumber+"-milestone"+milestone.fita,
-					source: odsNumber,
+					source: odsNumber.toString(),
 					target: odsNumber+"."+milestone.fita,
 					animated: false,
 					style: { stroke: '#000000' }

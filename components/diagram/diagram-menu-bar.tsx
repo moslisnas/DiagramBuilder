@@ -22,11 +22,11 @@ const RightContainer = styled.div`
     line-height: ${diagramMenuBarHeight.desktop};
 `;
 
-const DiagramMenuBar = (props: { nodes:any[], nodesHandler:any, edges:any[], edgesHandler:any, elements:any[], elementsHandler:any }) => {
+const DiagramMenuBar = (props: { nodes:any[], nodesHandler:any, edges:any[], edgesHandler:any }) => {
     return(
         <Container>
             <LeftContainer>
-                <DiagramNodeButtons nodes={props.nodes} nodesHandler={props.nodesHandler} edges={props.edges} edgesHandler={props.edgesHandler} elements={props.elements} elementsHandler={props.elementsHandler} />
+                <DiagramNodeButtons nodes={props.nodes} nodesHandler={props.nodesHandler} edges={props.edges} edgesHandler={props.edgesHandler} />
             </LeftContainer>
             <RightContainer>
                 <DiagramViewportButtons />

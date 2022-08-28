@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import DiagramViewportContext from "context/diagram-viewport-context";
-import { combineElements } from "utils/diagram-functions";
 import { defaultBackground, defaultControls, defaultMap } from "components/diagram/default";
 import ContentContainer from "components/layout/content-container";
 import DiagramViewport from "components/diagram/diagram-viewport";
@@ -23,7 +22,6 @@ const DiagramWorkspaceInfrastructure = (props: DiagramWorkspaceInfrastructurePro
     const valueDiagramViewportProvider:any = { background, setBackground, controls, setControls, map, setMap };
     const [nodes, setNodes] = useState(props.id ? getInfrastructureNodesData(props.id, (value:any) => console.log(value)): []);
     const [edges, setEdges] = useState(props.id ? getInfrastructureEdgesData(props.id): []);
-    const [elements, setElements] = useState(combineElements(nodes, edges));
 
     return(
         <DiagramViewportContext.Provider value={valueDiagramViewportProvider}>
@@ -32,12 +30,11 @@ const DiagramWorkspaceInfrastructure = (props: DiagramWorkspaceInfrastructurePro
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
             >
-                <DiagramMenuBar nodes={nodes} nodesHandler={setNodes} edges={edges} edgesHandler={setEdges} elements={elements} elementsHandler={setElements} />
+                <DiagramMenuBar nodes={nodes} nodesHandler={setNodes} edges={edges} edgesHandler={setEdges} />
                 <ContentContainer>
                     <DiagramViewport
                         nodes={nodes} nodesHandler={setNodes}
                         edges={edges} edgesHandler={setEdges}
-                        elements={elements} elementsHandler={setElements}
                         nodeTypes={{ lld: LldNode, lldVersion: LldVersionNode, environment: EnvironmentNode, server: ServerNode, network: NetworkNode }} />
                 </ContentContainer>
             </motion.div>

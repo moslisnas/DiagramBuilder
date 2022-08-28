@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import DiagramViewportContext from "context/diagram-viewport-context";
 import { defaultBackground, defaultControls, defaultMap, defaultOdsNodes, defaultOdsEdges } from "components/diagram/default";
@@ -21,6 +21,7 @@ const DiagramWorkspaceOds = (props: DiagramWorkspaceOdsProps) => {
     const [nodes, setNodes] = useState(props.ods ? getOdsNodesData(props.ods): getAllOdsNodesData);
     const [edges, setEdges] = useState(props.ods ? getOdsEdgesData(props.ods): getAllOdsEdgesData);
     const valueDiagramViewportProvider:any = { background, setBackground, controls, setControls, map, setMap };
+    const nodeTypes = useMemo(() => ({ ods: OdsNode, milestone: MilestoneNode, indicator: IndicatorNode }), []);
 
     return(
         <DiagramViewportContext.Provider value={valueDiagramViewportProvider}>
@@ -34,7 +35,7 @@ const DiagramWorkspaceOds = (props: DiagramWorkspaceOdsProps) => {
                     <DiagramViewport
                         nodes={nodes} nodesHandler={setNodes}
                         edges={edges} edgesHandler={setEdges}
-                        nodeTypes={{ ods: OdsNode, milestone: MilestoneNode, indicator: IndicatorNode }} />
+                        nodeTypes={nodeTypes} />
                 </ContentContainer>
             </motion.div>
         </DiagramViewportContext.Provider>

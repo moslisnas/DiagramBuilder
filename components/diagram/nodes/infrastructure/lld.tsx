@@ -36,7 +36,7 @@ const LldNode = (props: { data:LldNodeProps }) => {
                     type="target"
                     position={Position.Left}
                     id="a"
-                    style={{ borderRadius: "50%" }}
+                    style={{ visibility: "hidden" }}
                 />
             )}
             <Handle

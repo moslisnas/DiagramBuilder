@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useCallback  } from "react";
 import styled from "styled-components";
-import ReactFlow, { Controls, MiniMap, Background, addEdge } from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Controls, MiniMap, Background, addEdge, applyNodeChanges, applyEdgeChanges, useNodesState, useEdgesState, useReactFlow } from "react-flow-renderer";
 import ThemeContext from "context/theme-context";
 import DiagramViewportContext from "context/diagram-viewport-context";
 
@@ -24,7 +24,9 @@ const DiagramViewport = (props:DiagramViewportProps) => {
     // console.log(props.edges);
     const { general } = useContext(ThemeContext);
     const { background, controls, map } = useContext(DiagramViewportContext);
-    
+    const [nodes, setNodes, onNodesChange] = useNodesState(props.nodes);
+    const [edges, setEdges, onEdgesChange] = useEdgesState(props.edges);
+
     const onConnect = (params:any) => {
       const newEdge = {
         id: "e"+params.source+"-"+params.target,
@@ -33,31 +35,50 @@ const DiagramViewport = (props:DiagramViewportProps) => {
       }
       props.edgesHandler([...props.edges, newEdge]);
     }
+
+    // const onNodesChange = useCallback(
+    //   (changes) => setNodes((ns) => applyNodeChanges(changes, ns)),
+    //   []
+    // );
+    // const onEdgesChange = useCallback(
+    //   (changes) => setEdges((es) => applyEdgeChanges(changes, es)),
+    //   []
+    // );
+
+    //Zustand provider functionality.
+    // const { setViewport, setCenter } = useReactFlow();
+    // setViewport({ x: 0, y: 0, zoom: 2 });
+    // const transform = useStore((store) => store.transform);
     
     return(
-        <Container>
-          <ReactFlow
-            nodes={props.nodes}
-            edges={props.edges}
-            nodeTypes={props.nodeTypes}
-            onConnect={onConnect}
-            deleteKeyCode={"_DELETE"}
-            style={{
-              backgroundColor: general==="light" ? "#FFFFFF" : "#222222"
-            }}
-          >
-            {controls["enabled"] && (
-              <Controls />
-            )}
-            {map["enabled"] && (
-              <MiniMap nodeColor={(node) => {return '#eee';}} nodeStrokeWidth={3} />
-            )}
-            {//THERE IS A CONSOLE WARNING WITH THIS ELEMENT
-            /*background["enabled"] && (
-              <Background variant={background.variant} gap={background.gap} size={background.size}/>
-            )*/}
-          </ReactFlow>
-        </Container>
+        <ReactFlowProvider>
+          <Container>
+              <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                nodeTypes={props.nodeTypes}
+                onConnect={onConnect}
+                deleteKeyCode={"_DELETE"}
+                panOnDrag={true}
+                style={{
+                  backgroundColor: general==="light" ? "#FFFFFF" : "#222222"
+                }}
+              >
+                {controls["enabled"] && (
+                  <Controls />
+                )}
+                {map["enabled"] && (
+                  <MiniMap nodeColor={(node) => {return '#eee';}} nodeStrokeWidth={3} />
+                )}
+                {//THERE IS A CONSOLE WARNING WITH THIS ELEMENT
+                /*background["enabled"] && (
+                  <Background variant={background.variant} gap={background.gap} size={background.size}/>
+                )*/}
+              </ReactFlow>
+          </Container>
+        </ReactFlowProvider>
     );
 };
 

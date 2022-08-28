@@ -34,14 +34,14 @@ const LldVersionNode = (props: { data:LldNodeProps }) => {
                 type="source"
                 position={Position.Right}
                 id="a"
-                style={{ borderRadius: "50%" }}
+                style={{ visibility: "hidden" }}
             />
             {!props.data.firstVersion && (
                 <Handle
                     type="target"
                     position={Position.Left}
                     id="a"
-                    style={{ borderRadius: "50%" }}
+                    style={{ visibility: "hidden" }}
                 />
             )}
         </LldVersionNodeContainer>

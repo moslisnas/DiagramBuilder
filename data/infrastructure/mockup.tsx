@@ -1,4 +1,5 @@
 import { nodeSizes, nodeGaps } from "constants/nodes/infrastructure";
+import { markerEdgeLldVersion } from "components/diagram/markers/infrastructure";
 
 interface Infrastructure{
 	id: number;
@@ -227,6 +228,7 @@ export const getInfrastructureNodesData = (infrastructureId:number, nodeDisplayH
 							},
 							position: { x: position[0] + networkXDisplacement, y: position[1]+nodeSizes.environment[1]+nodeGaps.server[1]+nodeSizes.server[1]-50 },
 							type: "network",
+							// hidden: true,
 							draggable: false
 						}
 					);
@@ -277,7 +279,9 @@ export const getInfrastructureEdgesData = (infrastructureId:number):any[] => {
 						id: "LLDVersion-"+infrastructure.lldVersions[index-1].version+"-LLDVersion-"+version.version,
 						source: "LLDVersion-"+infrastructure.lldVersions[index-1].version,
 						target:"LLDVersion-"+version.version,
-						style: { stroke: '#000000' }
+						style: { stroke: '#000000' },
+						markerStart: markerEdgeLldVersion.markerStart,
+						markerEnd: markerEdgeLldVersion.markerEnd
 					}
 				);
 			}
@@ -287,7 +291,9 @@ export const getInfrastructureEdgesData = (infrastructureId:number):any[] => {
 						id: "LLDVersion-"+infrastructure.lldVersions[index-1].version+"-LLD-"+version.version,
 						source: "LLDVersion-"+infrastructure.lldVersions[index-1].version,
 						target:"LLD-"+version.version,
-						style: { stroke: '#000000' }
+						style: { stroke: '#000000' },
+						markerStart: markerEdgeLldVersion.markerStart,
+						markerEnd: markerEdgeLldVersion.markerEnd
 					}
 				);
 			}

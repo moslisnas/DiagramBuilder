@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import DiagramViewportContext from "context/diagram-viewport-context";
 import { defaultBackground, defaultControls, defaultMap } from "components/diagram/default";
@@ -22,6 +22,7 @@ const DiagramWorkspaceInfrastructure = (props: DiagramWorkspaceInfrastructurePro
     const valueDiagramViewportProvider:any = { background, setBackground, controls, setControls, map, setMap };
     const [nodes, setNodes] = useState(props.id ? getInfrastructureNodesData(props.id, (value:any) => console.log(value)): []);
     const [edges, setEdges] = useState(props.id ? getInfrastructureEdgesData(props.id): []);
+    const nodeTypes = useMemo(() => ({ lld: LldNode, lldVersion: LldVersionNode, environment: EnvironmentNode, server: ServerNode, network: NetworkNode }), []);
 
     return(
         <DiagramViewportContext.Provider value={valueDiagramViewportProvider}>
@@ -35,7 +36,7 @@ const DiagramWorkspaceInfrastructure = (props: DiagramWorkspaceInfrastructurePro
                     <DiagramViewport
                         nodes={nodes} nodesHandler={setNodes}
                         edges={edges} edgesHandler={setEdges}
-                        nodeTypes={{ lld: LldNode, lldVersion: LldVersionNode, environment: EnvironmentNode, server: ServerNode, network: NetworkNode }} />
+                        nodeTypes={nodeTypes} />
                 </ContentContainer>
             </motion.div>
         </DiagramViewportContext.Provider>

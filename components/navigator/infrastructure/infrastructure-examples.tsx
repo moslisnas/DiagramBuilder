@@ -23,7 +23,7 @@ const InfrastructureExamples = (props: InfrastructureExamplesProps) => {
 
     return (
         <Container>
-            <ExampleButton><InfrastructureExample id={1} title={"Infraestructura 1"}/></ExampleButton>
+            <ExampleButton><InfrastructureExample id={1} title={"Infraestructure 1"}/></ExampleButton>
             {/*<ExampleButton><InfrastructureExample id={2} title={"Infraestructura 2"}/></ExampleButton>
             <ExampleButton><InfrastructureExample id={3} title={"Infraestructura 3"}/></ExampleButton>
             <ExampleButton><InfrastructureExample id={4} title={"Infraestructura 4"}/></ExampleButton>

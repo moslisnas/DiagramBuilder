@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Handle, Position } from 'react-flow-renderer';
+import { Handle, Position } from 'reactflow';
 import { nodeSizes } from "constants/nodes/infrastructure";
 
 const LldVersionNodeContainer = styled.span<{color?:string}>`

@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { odsColors } from "utils/ods-colors";
-import { Handle, Position } from 'react-flow-renderer';
+import { Handle, Position } from 'reactflow';
 
 const OdsNodeContainer = styled.span<{color:string; fontColor:string}>`
     display: inline-block;

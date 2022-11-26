@@ -1,4 +1,4 @@
-import { BackgroundVariant } from "react-flow-renderer";
+import { BackgroundVariant } from "reactflow";
 import { getAllOdsNodesData, getAllOdsEdgesData } from "data/ods/mockup";
 
 //Theme.

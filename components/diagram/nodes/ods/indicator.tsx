@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
 import styled from "styled-components";
-import { Handle, Position } from 'react-flow-renderer';
+import { Handle, Position } from 'reactflow';
 import PopupContext from "context/popup-context";
 import { odsColors } from "utils/ods-colors";
 

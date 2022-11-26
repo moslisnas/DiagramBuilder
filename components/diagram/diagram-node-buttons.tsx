@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import ReactFlow from "react-flow-renderer";
+import ReactFlow from "reactflow";
 import { getLastNodeId } from "utils/diagram-functions";
 
 const Container = styled.div`

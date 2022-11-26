@@ -2,7 +2,7 @@ import React, { useState } from "react";
 //import { motion } from "framer-motion";
 import styled from "styled-components";
 import { odsColors } from "utils/ods-colors";
-import { Handle, Position } from 'react-flow-renderer';
+import { Handle, Position } from 'reactflow';
 
 const MilestoneNodeContainer = styled.span<{color:string; fontColor:string}>`
     display: block;

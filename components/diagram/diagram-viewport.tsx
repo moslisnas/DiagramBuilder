@@ -1,6 +1,6 @@
 import React, { useContext, useState, useCallback  } from "react";
 import styled from "styled-components";
-import ReactFlow, { ReactFlowProvider, Controls, MiniMap, Background, addEdge, applyNodeChanges, applyEdgeChanges, useNodesState, useEdgesState, useReactFlow } from "react-flow-renderer";
+import ReactFlow, { ReactFlowProvider, Controls, MiniMap, Background, addEdge, applyNodeChanges, applyEdgeChanges, useNodesState, useEdgesState, useReactFlow } from "reactflow";
 import ThemeContext from "context/theme-context";
 import DiagramViewportContext from "context/diagram-viewport-context";
 

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import DiagramViewportContext from "context/diagram-viewport-context";
-import { BackgroundVariant } from "react-flow-renderer";
+import { BackgroundVariant } from "reactflow";
 
 const Container = styled.div`
     height: 100%;

@@ -38,6 +38,10 @@ const DiagramViewportButtons = () => {
                     enabled = true;
                 }
                 else if(background["variant"]===BackgroundVariant.Dots){
+                    variant = BackgroundVariant.Cross;
+                    enabled = true;
+                }
+                else if(background["variant"]===BackgroundVariant.Lines){
                     variant = null;
                     enabled = false;
                 }
@@ -64,6 +68,8 @@ const DiagramViewportButtons = () => {
                         background.variant===BackgroundVariant.Lines ?
                             "/icons/menus/background-dots32px.png"
                             : background.variant===BackgroundVariant.Dots ?
+                                "/icons/menus/background-cross32px.png"
+                            : background.variant===BackgroundVariant.Cross ?
                                 "/icons/menus/background-empty32px.png"
                             : "/icons/menus/background-square32px.png"
                     }

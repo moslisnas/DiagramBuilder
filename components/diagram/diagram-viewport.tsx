@@ -72,10 +72,9 @@ const DiagramViewport = (props:DiagramViewportProps) => {
                 {map["enabled"] && (
                   <MiniMap nodeColor={(node) => {return '#eee';}} nodeStrokeWidth={3} />
                 )}
-                {//THERE IS A CONSOLE WARNING WITH THIS ELEMENT
-                /*background["enabled"] && (
+                {background["enabled"] && (
                   <Background variant={background.variant} gap={background.gap} size={background.size}/>
-                )*/}
+                )}
               </ReactFlow>
           </Container>
         </ReactFlowProvider>

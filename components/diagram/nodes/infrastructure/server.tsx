@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Handle, Position } from 'reactflow';
 import { nodeSizes } from "constants/nodes/infrastructure";
 import PopupContext from "context/popup-context";
+import HidersNodeContext from "context/nodes/hiders-node-context";
 
 const ServerNodeContainer = styled.span<{color?:string}>`
     display: block;
@@ -89,6 +90,7 @@ const CloseModalButton = styled.div`
 `;
 
 interface ServerNodeProps{
+    diagramId: string;
     name: string;
     type: string;
     power: string;
@@ -112,6 +114,7 @@ interface ServerNodeProps{
 
 const ServerNode = (props: { data:ServerNodeProps }) => {
     const { setShow, setChildren } = useContext(PopupContext);
+    const { hiders, setHiders } = useContext(HidersNodeContext);
     const [open, setOpen] = useState(false);
 
     let serverImgSrc:string = "";
@@ -202,9 +205,14 @@ const ServerNode = (props: { data:ServerNodeProps }) => {
             </>
         );
     }
-    const displayElements = () => {
+    const updateHiders = () => {
         setOpen(!open);
-        props.data.nodeDisplayHandler(props.data.name);
+        if(hiders.includes(props.data.diagramId)){
+            setHiders(hiders.filter((value) => value!==props.data.diagramId));
+        }
+        else{
+            setHiders([...hiders, props.data.diagramId]);
+        }
     }
 
     return(
@@ -231,9 +239,9 @@ const ServerNode = (props: { data:ServerNodeProps }) => {
                     style={{ visibility: open ? "visible" : "hidden", borderRadius: "50%" }}
                 />
             </ServerNodeContainer>
-            {/*<DisplayButton onClick={() => displayElements()}>
+            {<DisplayButton onClick={() => updateHiders()}>
                 <img width="10px" height="10px" src={open ? "/icons/nodes/arrow-up.svg" : "/icons/nodes/arrow-down.svg"} />
-            </DisplayButton>*/}
+            </DisplayButton>}
         </>
     );
 }

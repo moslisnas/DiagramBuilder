@@ -111,7 +111,7 @@ const getInfrastructureById = (id:number) => {
 	return result;
 }
 
-export const getInfrastructureNodesData = (infrastructureId:number, nodeDisplayHandler:any):any[] => {
+export const getInfrastructureNodesData = (infrastructureId:number):any[] => {
 	const result:any[] = [];
 
 	let infrastructure = getInfrastructureById(infrastructureId);
@@ -189,6 +189,7 @@ export const getInfrastructureNodesData = (infrastructureId:number, nodeDisplayH
 				{
 					id: `Server-${server.name}`,
 					data: {
+						diagramId: `Server-${server.name}`,
 						name: server.name,
 						type: server.type,
 						power: server.power,
@@ -204,8 +205,7 @@ export const getInfrastructureNodesData = (infrastructureId:number, nodeDisplayH
 						backupPolicy: server.backupPolicy,
 						contingency: server.contingency,
 						prd: server.prd,
-						observationsBackup: server.observationsBackup,
-						nodeDisplayHandler: nodeDisplayHandler
+						observationsBackup: server.observationsBackup
 					},
 					position: { x: position[0], y: position[1]+nodeSizes.environment[1]+nodeGaps.server[1] },
 					type: "server",
@@ -221,14 +221,16 @@ export const getInfrastructureNodesData = (infrastructureId:number, nodeDisplayH
 						{
 							id: `Network-${network.value}_Server-${server.name}`,
 							data: {
+								diagramId: `Network-${network.value}_Server-${server.name}`,
 								name: network.name,
 								value: network.value,
 								serverRelated: server.name,
-								observations: server.observationsNetwork
+								observations: server.observationsNetwork,
+								hiderId: `Server-${server.name}`
 							},
 							position: { x: position[0] + networkXDisplacement, y: position[1]+nodeSizes.environment[1]+nodeGaps.server[1]+nodeSizes.server[1]-50 },
 							type: "network",
-							// hidden: true,
+							hidden: false,
 							draggable: false
 						}
 					);
@@ -324,6 +326,9 @@ export const getInfrastructureEdgesData = (infrastructureId:number):any[] => {
 				result.push(
 					{
 						id: `Network-${network.value}_Server-${server.name}-Server-${server.name}`,
+						data: {
+							hiderId: `Server-${server.name}`
+						},
 						source: `Server-${server.name}`,
 						target: `Network-${network.value}_Server-${server.name}`,
 						style: { stroke: '#000000' }

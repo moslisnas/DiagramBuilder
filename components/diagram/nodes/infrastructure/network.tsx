@@ -66,15 +66,16 @@ const CloseModalButton = styled.div`
 `;
 
 interface NetworkNodeProps{
+    diagramId: string;
     name: string;
     value: string;
     serverRelated: string;
     observations: string;
+    hiderId: string;
 }
 
 const NetworkNode = (props: { data:NetworkNodeProps }) => {
     const { setShow, setChildren } = useContext(PopupContext);
-    const [open, setOpen] = useState(false);
 
     const openPopup = () => {
         setShow(true);

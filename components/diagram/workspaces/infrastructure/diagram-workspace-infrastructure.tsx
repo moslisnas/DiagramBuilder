@@ -20,7 +20,7 @@ const DiagramWorkspaceInfrastructure = (props: DiagramWorkspaceInfrastructurePro
     const [controls, setControls] = useState(defaultControls);
     const [map, setMap] = useState(defaultMap);
     const valueDiagramViewportProvider:any = { background, setBackground, controls, setControls, map, setMap };
-    const [nodes, setNodes] = useState(props.id ? getInfrastructureNodesData(props.id, (value:any) => console.log(value)): []);
+    const [nodes, setNodes] = useState(props.id ? getInfrastructureNodesData(props.id): []);
     const [edges, setEdges] = useState(props.id ? getInfrastructureEdgesData(props.id): []);
     const nodeTypes = useMemo(() => ({ lld: LldNode, lldVersion: LldVersionNode, environment: EnvironmentNode, server: ServerNode, network: NetworkNode }), []);
 
